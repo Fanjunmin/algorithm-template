@@ -31,7 +31,7 @@ void ff_hash_insert1(int x)
     ff_list_insert1(k, x);
 }
 
-bool ff_quary1(int x)
+bool ff_query1(int x)
 {
     int k = (x % N + N) % N;
     for (int i = h1[k]; i != -1; i = next[i]) {
