@@ -1,0 +1,36 @@
+最短路算法，设n个点m条边
+1 单源最短路
+1.1 所有边的权重都是正数
+1.1.1 朴素版Dijkstra算法
+适合稠密的图，使用邻接矩阵来表示g[n][n]，时间复杂度O(n^2)
+假设：S是已经确定最短路径的点
+初始化: Dist[1] = 0, Dist[i] = 正无穷
+for i:1~n
+    t <- 不在S中距离最近的点             (总共n^2)
+    S <- t                              (总共n)
+    用t更新其它点(t指向的点)距离          (总共n^2)
+
+1.1.2 堆优化版本的Dijkstra算法
+适合稀疏图，时间复杂度O(mlogn)
+使用C++ STL有限队列构造小根堆: 
+priority_queue<type, vector<type>,greater<type>>
+初始化: Dist[1] = 0, Dist[i] = 正无穷
+    S <- 节点1 {dist=0, index=1}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+while S非空
+    t <- 不在S中距离最近的点             (总共n)
+    S <- t                              (总共n)
+    用t更新其它点(t指向的点)距离          (总共mlogn)
+
+2.1 存在权重为负值的边
+2.1.1 bellman-ford算法
+时间复杂度O(nm)
+for i：1~nm
+    遍历所有的 a->b 权重w
+    更新b的权重dist[b] = min(dist[b], dist[a] + w)
+
+2.1.2 SPFA算法
+一般O(m), 最坏O(nm
+
+2 多源最短路
+2.1 Floyd算法
+时间复杂度 O(n^3)
