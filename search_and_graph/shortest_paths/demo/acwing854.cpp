@@ -1,8 +1,10 @@
-#include <cstring>
-const int N = 1e4;
-const int INF = 0x3f3f3f3f;
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 210;
+int n, m, k;
 int g[N][N];
-int n;
+int INF = 0x3f3f3f3f;
 
 void init()
 {
@@ -27,4 +29,22 @@ void add(int i, int j, int w)
 bool judge(int i, int j)
 {
     return g[i][j] > INF / 2;
+}
+
+int main()
+{
+    int x, y, z;
+    cin >> n >> m >> k;
+    init();
+    while (m--) {
+        cin >> x >> y >> z;
+        add(x, y, z);
+    }
+    floyd();
+    while (k--) {
+        cin >> x >> y;
+        if (judge(x, y)) cout << "impossible" << endl;
+        else cout << g[x][y] << endl;
+    }
+    return 0;
 }

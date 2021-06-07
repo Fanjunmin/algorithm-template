@@ -6,45 +6,48 @@
 假设：S是已经确定最短路径的点
 初始化: Dist[1] = 0, Dist[i] = 正无穷
 for i:1~n
-    t <- 不在S中距离最近的点             (总共n^2)
+    t <- 不在S中距离最近的点             (总共n^2, 比较每一个节点)
     S <- t                              (总共n)
-    用t更新其它点(t指向的点)距离          (总共n^2)
+    用t更新其它点(t指向的点)距离          (总共n^2, Dist[j] = min(Dist[j], Dist[t] + g[t][j]))
 
 1.1.2 堆优化版本的Dijkstra算法
 适合稀疏图，时间复杂度O(mlogn)
-使用C++ STL有限队列构造小根堆: 
-priority_queue<type, vector<type>,greater<type>>
+使用C++ STL优先队列构造小根堆: 
+priority_queue<type, vector<type>, greater<type>>
 初始化: Dist[1] = 0, Dist[i] = 正无穷
-    S <- 节点1 {dist=0, index=1}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+    S <- 节点1 {Dist=0, index=1}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 while S非空
-    t <- 不在S中距离最近的点             (总共n)
+    t <- 不在S中距离最近的点             (总共n, 每次只需要取堆首的元素即可)
     S <- t                              (总共n)
-    用t更新其它点(t指向的点)距离          (总共mlogn)
+    用t更新其它点(t指向的点)距离          (总共mlogn, Dist[j] = min(Dist[j], w{t->j}))
 
 2.1 存在权重为负值的边
 2.1.1 bellman-ford算法
 时间复杂度O(nm)
+不用建图, 只需要保留所有的边权数组w{i->j}
+初始化第一个节点的距离 Dist[1] = 0
 for i：1~n
-    备份dist->backup
+    备份Dist->backup
     遍历所有的 a->b 权重w(a->b)
-    更新b的权重dist[b] = min(dist[b], backup[a] + w(a->b)), 这是松弛操作
+    更新b的权重Dist[b] = min(Dist[b], backup[a] + w(a->b)), 这是松弛操作
 如果是k次松弛操作, i:1~k
 
 2.1.2 SPFA算法
 一般O(m), 最坏O(nm)
 使用队列queue进行优化:
-queue<-起始点
+queue<-起始点(初始化Dist[1] = 0)
 while queue非空
     t <- 出队列
-    遍历t的所有不在queue中的边x
-    更新x的权重dist[x] = min(dist[x], dist[t] + w(t->x))
+    遍历t的出边x
+    更新x的权重Dist[x] = min(Dist[x], Dist[t] + w(t->x))
+    如果x不在队列中, 将x入队列
 
 SPFA判断负环, 当从起始点某一个节点经过的边数cnt >= n, 由容斥原理, 存在负环
-queue<-所有点
+queue<-所有点(不需要初始化Dist)
 while queue非空
     t <- 出队列
-    遍历t的所有不在queue中的边x
-    更新x的权重dist[x] = min(dist[x], dist[t] + w(t->x))
+    遍历t的出边x
+    更新x的权重Dist[x] = min(Dist[x], Dist[t] + w(t->x))
     更新边数cnt[x] = cnt[t] + 1
 
 
@@ -52,7 +55,9 @@ while queue非空
 2.1 Floyd算法
 使用邻接矩阵g[n][n]来存储, 动态规划的思想
 时间复杂度 O(n^3)
+初始化g[i][j] = 0x3f3f3f3f  i != j
+                0           i == j
 for k:1~n
     for i:1~n
         for j:1~n
-            dist[i,j] = min(dist[i,j], dist[i,k]+dist[k,j])
+            Dist[i,j] = min(Dist[i,j], Dist[i,k]+Dist[k,j])
