@@ -3,10 +3,11 @@
 点数n, 边数m, 距离dist, 最小生成树的集合S
 1.1 朴素版Prime
 时间内复杂度O(n^2)
-初始化所有的dist<-INF
+使用邻接矩阵来存储图
+初始化所有的dist <- INF
 for i:0~n-1
     t<-找到集合S外离集合S最近的点
-    用t更新其他点到集合的具体
+    用t更新其他点到集合的距离
     将t放入集合
 
 1.2 堆优化Prime
@@ -15,6 +16,10 @@ for i:0~n-1
 2. Kruskal
 时间内复杂度O(mlogm)
 将所有边按照权重从小到大排序
+struct edge {
+    int u, v, w;
+    bool operator<(const edge &e) return w < e.w;
+};
 枚举所有边 a->b 权重w(a->b)
     判断a b是否连通, 不连通, 加入集合
 判断整个集合连通
