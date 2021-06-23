@@ -1,0 +1,64 @@
+STL容器
+
+通用方法
+empty/size
+empty返回容器是否为空, size返回容器的实际大小(元素个数)
+
+1. vector 
+#include <vector>
+变长数组, 倍增扩容, 支持随机访问
+构造函数:
+vector<type> a1, a2{1,2,3}, a3(10, 0), a4{iter1, iter2};
+clear 将vector清空
+迭代器:
+vector<type>::iterator, begin(), end()
+常见的访问方式 for(auto iter = vec.begin(); iter != vec.end(); ++iter) {}
+方法                                    描述
+[]                                     随机访问
+front/back                             首尾元素
+push_back/pop_back                  插入/删除末尾元素
+resize                                配置数组大小
+
+2. queue
+#include <quque>
+循环队列queue
+方法            描述
+push           入队列
+pop            出队列
+front          对头元素
+back           队尾元素
+优先队列priority_queue
+大根的二叉堆
+方法            描述
+push           入队列
+pop            出队列
+top            堆顶元素
+自定义元素的优先队列必须重载bool operator<(const type &t1, const type &t2)
+若是要使用自定义元素的小根堆:
+bool operator<(const type &t1, const type &t2) {t1 > t2};
+非自定义元素的小根堆, 可以声明为 priority_queue<int, vector<int>, greater<int>>
+注意, 小根堆定义的比较刚好是相反的
+懒惰删除法: 使用标记数组
+
+3. 双端队列 deque
+#include <deque>
+支持在首尾两端高效插入或者删除的线性存储空间, 与vector相比, deque头部删除O(1)
+与queue相比, deque可以O(1)随机访问
+方法                        描述
+[]                         随机访问
+clear                      清空队列
+begin/end                  首尾迭代器
+front/back                 首尾元素
+push_front/push_back       队首/队尾插入元素
+pop_front/pop_back         队首/队尾删除元素
+
+4. 集合set
+#include <set>
+有序集合set没有重复元素, 无序集合multi_set可以包含若干重复元素
+自定义元素必须重载bool operator<(const type &t1, const type &t2)
+方法                            描述
+clear                          清空集合
+insert                         插入元素
+find                           查找元素, 失败返回end迭代器
+erase                          删除迭代器
+count                          返回元素的个数
