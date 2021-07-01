@@ -9,7 +9,7 @@ g[N][N], 元素g[u][v]=w, 表示顶点u->v, 该边的权重为w
 节点初始化:
 memset(h, -1, sizof(h)); idx = 0;
 添加权重为w的节点<u, v>
-idx++; wt[idx] = w; e[idx] = v; ne[idx] = h[a]; h[a] = idx;
+idx++; wt[idx] = w; e[idx] = v; ne[idx] = h[u]; h[u] = idx;
 对于头节点为k的链表遍历
 for(int i = h[k]; i != -1; i = ne[i]) {
     int j = e[i];   //下一个节点
