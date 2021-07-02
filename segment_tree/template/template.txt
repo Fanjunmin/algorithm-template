@@ -9,15 +9,37 @@ segment tree线段树
 对于任意一个节点x, 其父节点为(x-1)/2
 N个节点的满二叉树最大为4N, 因此保存线段树的数组长度不要小于4N
 
-1. 建树
+2. 算法API介绍
+假设数组为data[N], 线段树tree[4*N] {l,r,val}
 以区间最大值为例:
 data[l, r] = max(data[l, mid], data[mid+1, r])
-这样就可以递归的进行下去, 递归的出口为l==r
+2.1 建树
+线段树的初始节点p=0对应区间[0, N-1]
+build_tree(p=0, l=0, r=n-1);
+递归进行(mid=l+r>>1)
+左子树 build_tree(2*p+1, l, mid);
+右子树 build_tree(2*p+2, mid+1, r);
+左右合并 tree[p].val = max(tree[2*p+1].val, tree[2*p+2].val);
+递归的出口为l==r, 此时tree[p]=data[l];
 
-2. 单点[x,x]修改
-自下而上更新节点值, 因此需要递归, 递归出口依旧是l==r
+2.2 单点[x,x]修改 {x, v}: index=x对应需要修改的value=v
+初始状态
+update(p=0, index=x, value=v);
+递归进行(mid=tree[p].l+tree[p].r>>1)
+index=x在左子树:
+    x<=mid, update(2*p+1, x, v);
+index=x在右子树:
+    x>mid, update(2*p+2, x, v);
+左右合并 tree[p].val = max(tree[2*p+1].val, tree[2*p+2].val);
+递归出口是tree[p].l==tree[p].r, 此时修改tree[p].val=v;
 
-3. 区间查询[l, r]
-3.1 当[l,r]覆盖了当前的区间, 立即返回
-3.2 当左节点与[l,r]有重叠, 递归访问左子树
-3.3 当右节点与[l,r]有重叠, 递归访问右子树
+2.3 区间查询[l, r]
+初始状态
+query(p=0, l, r);
+递归进行(mid=tree[p].l+tree[p].r>>1)
+当左节点与[l,r]有重叠, 递归访问左子树
+    l<=mid, query(2*p+1, l, r)
+当右节点与[l,r]有重叠, 递归访问右子树
+    l>mid, query(2*p+2, l, r)
+递归出口是当区间[l,r]覆盖了当前的区间
+即l<=tree[p].l && tree[p].r<=r 或者[tree[p].l, tree[p].r]包含于[l, r], 返回tree[p].val;
