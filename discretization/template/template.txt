@@ -1,0 +1,11 @@
+Discretization离散化
+通常指的是将一个很大的稀疏区间映射到一个较小的稠密区间
+例如[1, 10^9]-->[1, 10^5]
+seg_big-->seg_small
+1. 若需要区间去重
+先排序: sort(seg_big.begin(), seg_small.end());
+使用库函数去重: seg_big.erase(unique(seg_big.begin(), seg_big.end()), seg_big.end());
+2. 使用二分进行离散化
+对于元素x, 在区间[0, seg_big.size()-1]使用二分查找找到第一个大于等于x的位置idx
+那么就有映射 x->idx, 其中seg_bug[idx]=x
+
