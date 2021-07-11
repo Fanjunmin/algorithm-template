@@ -1,0 +1,22 @@
+1. 单链表
+1.1 数组模拟
+预定义
+node[N]: 链表节点值
+ne[N]: 链表指向下一个节点的坐标
+idx: 全局坐标
+初始化:
+    node[0] = 0, ne[0] = -1, idx = 0;
+插入操作insert(a, b), 在节点a后面插入一个值为b的节点:
+    idx++;
+    node[idx] = b, ne[idx] = ne[a], ne[a] = idx;
+删除操作remove(k), 删除节点k的下一个节点:
+    ne[k] = ne[ne[k]]
+
+1.2 传统的数据结构
+通常由值以及指向下一个节点的指针组成: 
+struct NodeList {   
+    int val;
+    NodeList *next;
+}
+1.2.1 翻转链表 leetcode206
+
