@@ -1,0 +1,13 @@
+滑动窗口(sliding window)
+
+算法流程
+连续序列 s[N]
+初始化 l=r=0
+while (r < N) {
+    // r向右移动
+    windows <- s[r++]
+    while (windows need shrink) {
+        // l向右移动
+        windows <- s[l++]
+    } 
+}
