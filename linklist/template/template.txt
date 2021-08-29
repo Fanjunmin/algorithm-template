@@ -18,5 +18,16 @@ struct NodeList {
     int val;
     NodeList *next;
 }
-1.2.1 翻转链表 leetcode206
 
+应用
+LRU: Least Recently Used
+设计一种数据结构, 以capacity作为最大的缓存容量, 在此基础上实现两个API, 其时间复杂度为O(1)
+(1) put(k, v)
+将键值对{k, v}存入
+(2) get(k)
+获取键k对应的值v, 如果k不存在, 则返回-1
+
+根据时间复杂度, 可以猜想到数据结构是hash+linklist
+操作            put         get
+hashtable       O(n)        O(1)
+linklist        O(1)        O(n)

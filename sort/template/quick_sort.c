@@ -1,8 +1,8 @@
 #define ff_sort(x, y) do {  \
-    x ^= y, y ^= x, x ^= y; \
+    (x) ^= (y), (y) ^= (x), (x) ^= (y); \
 } while(0)
 
-int quick_sort(int q[], int l, int r)
+void quick_sort(int q[], int l, int r)
 {
     if (l >= r) return;
     int x = q[l + r >> 1], i = l - 1, j = r + 1;
