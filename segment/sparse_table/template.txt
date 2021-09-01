@@ -1,0 +1,15 @@
+ST：Sparse Table 稀疏表
+在O(1)时间实现区间最值查询, RMQ问题(Range Maximum/Minimum Query)
+F[i, j]表示的是区间[i, i+2^j-1]这样一个长度为2^j的区间
+根据倍增的思想, 递归公式如下
+F[i, j] = max(F[i, j-1], f[i+2^(j-1), j-1])
+
+给定数组a[N], k=log2(N)
+1. 初始化稀疏表 时间复杂度O(NlogN)
+F[i, 0] = a[i]
+F[i, j] = max(F[i, j-1], f[i+2^(j-1), j-1])
+
+2. 区间查询操作 时间复杂度O(1)
+给定区间[l, r], 区间长度为len=r-l+1, 因此j=log2(len) 2^j <= len < 2^(j+1)
+查询区间可以分为[l, l+2^j-1]以及[r-2^j+1, r], 两个区间可能有重复, 但是对最值无影响
+MAX_V[l, r] = max(F[l, j], F[r - 2^j + 1, j])
